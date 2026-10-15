@@ -251,36 +251,42 @@ sC = player_slide("Competitors · Automotive (3/3)", "ESG Narrative", [
          tag="#SloganVsProof")], COMP,
     "Polestar figures self-reported. Hyundai/Kia: battery warranty data from secondary sources; IONIQ Forest engagement metrics not published. BYD: Blade Battery nail test dated and not independently replicated; BYD hub not verified.")
 
-REM = [("why", "Why it works"), ("matters", "Why it matters for Stellantis")]
+REM = [("why", "Why it works"), ("esg", "ESG territories"), ("matters", "Why it matters for Stellantis")]
 
 sD = player_slide("Remarkable · Global storytelling", "Remarkable cases", [
     dict(logo="Microsoft", title="Promise, proof, people, depth",
          why="Four 2030 commitments, one big proof number and one sub-page each, then the CSO's voice, stories and a reports hub. It owns the bad news in the first person: emissions up about 25% in 2025, with the cause.",
          matters="The model for the first two layers of a hub, and the register for 2050: name the setback before the press does.",
+         esg="Fair Transition: $4bn Elevate reskilling. Transparency: admits +25% emissions with the cause. Environmental: supplier clause, but Scope 3 rising. Customer Trust: not found.",
          tag="#PromiseProofPeople"),
     dict(logo="Schneider Electric", title="A score out of 10 that survives a change of plan",
          why="SSI 2021-25 closed at 8.86/10; Impact 2030 restarts the scale (3.69 at H1 2026 vs 4.20 target). Published quarterly with results; pillars written as business missions; linked to incentives.",
          matters="A “Stellantis Impact Score” restarting with FaSTLAne turns the new plan into a chapter, not a retreat.",
+         esg="Fair Transition: Access to Energy (61m people vs 50m target), 1m trained. Environmental: \u221256% operational CO\u2082 at top 1,000 suppliers. Transparency: quarterly score. Customer Trust: not found.",
          tag="#OneScore"),
     dict(logo="Patagonia", title="“Work in Progress”: candour as a brand trait",
          why="A purpose, an act that proves it (“Earth is now our only shareholder”) and an impact report with missed targets on the cover (footprint +2%). First for GlobeScan/ERM experts in 2025.",
          matters="One lesson: name the step back, explain why, reaffirm the path. The tone itself is not transferable.",
+         esg="Customer Trust: Ironclad Guarantee and repairs. Environmental: Footprint Chronicles supply-chain map. Transparency: \u201cWork in Progress\u201d report. Fair Transition: not found.",
          tag="#RadicalCandour")], REM,
     "Microsoft: the only hub read directly (October 2026); criticism over a gas deal with Chevron. Schneider: weight in bonuses not verified. Patagonia: figures self-reported; candour works only when backed by an act. Counter-example: Unilever's quiet 2024 target cuts.")
 
-REM2 = [("why", "Why it works"), ("matters", "Why it matters for Stellantis")]
+REM2 = REM
 sE = player_slide("Remarkable · ESG topics", "Remarkable cases", [
     dict(logo="Enel", title="Fair Transition: just transition as a report with KPIs",
          why="Futur-e converts 23 Italian coal plants and a mining area; a dedicated Just Transition Report tracks people redeployed after reskilling (about 55%, 110 hours each in 2021).",
          matters="Italian, industrial, transferable to the ICE-to-EV shift at Mirafiori, Pomigliano, Melfi, Termoli: a joint ESG and HR format.",
+         esg="Fair Transition: strong (Futur-e, Just Transition Report). Customer Trust, Environmental and Transparency: not found in our sources.",
          tag="#JustTransitionReport"),
     dict(logo="Miele", title="Customer Trust: “longevity is the ultimate sustainability”",
          why="Machines tested for 5,000 cycles, about 20 years of use, reviewed by Fraunhofer, with an honest note that this is not a guarantee.",
          matters="Durability told as sustainability, with a test and a caveat: a model for SUSTAINera parts and Spoticar battery certificates.",
+         esg="Customer Trust: strong (5,000-cycle durability testing). The other three territories were not analysed in our sources.",
          tag="#DurabilityIsSustainability"),
     dict(logo="Holcim", title="Environmental Transformation: green product lines that grow",
          why="ECOPact, ECOPlanet and ECOCycle are brands with a share of sales (31% and 36%) and 8 Mt recycled, reported next to the financial results.",
          matters="Template for SUSTAINera as a brand with a revenue-share KPI, instead of “up to 80%” claims.",
+         esg="Environmental: strong (ECO brands with share of sales). Transparency: medium (ECO KPIs next to results). Fair Transition and Customer Trust: not found.",
          tag="#GreenRevenue")], REM2,
     "Enel caveat: redeployment share fell to about 30% in 2023, the rest retired; figures dated. Miele figures self-reported. Holcim figures self-reported. Transparency & Accountability remarkable cases are on the storytelling slide (Microsoft, Schneider, Patagonia).")
 # ---------------------------------------------------------------- 11 Stellantis today
