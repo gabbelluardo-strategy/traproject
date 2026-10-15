@@ -40,7 +40,7 @@ for sh in list(agenda.shapes):
         sh.width = Inches(9.5)
         for t in ["Key insight and the four territories", "Competitors: automotive players",
                   "Remarkable cases: global storytelling", "Remarkable cases: ESG topics",
-                  "Positioning map", "Stellantis today and narrative architecture", "Take-outs"]:
+                  "ESG territory map and positioning map", "Stellantis today and narrative architecture", "Take-outs"]:
             p = tf.add_paragraph()
             p.level = 1
             r = p.add_run()
@@ -289,6 +289,81 @@ sE = player_slide("Remarkable · ESG topics", "Remarkable cases", [
          esg="Environmental: strong (ECO brands with share of sales). Transparency: medium (ECO KPIs next to results). Fair Transition and Customer Trust: not found.",
          tag="#GreenRevenue")], REM2,
     "Enel caveat: redeployment share fell to about 30% in 2023, the rest retired; figures dated. Miele figures self-reported. Holcim figures self-reported. Transparency & Accountability remarkable cases are on the storytelling slide (Microsoft, Schneider, Patagonia).")
+# ---------------------------------------------------------------- ESG territory map (selected players)
+sM = new_slide(LAYOUT_BAR, "ESG territory map")
+title(sM, "Who is strong where: selected players on the four ESG territories", y=1.02, size=20)
+TERR = ["Fair Transition", "Customer Trust", "Environmental Transformation", "Transparency & Accountability"]
+MAP = [
+ ("Volkswagen", [("M", "ID.Polo €24,995 vs 35k jobs cut"), ("M", "Integrity, inward-facing"), ("M", "regenerate+, raw materials"), ("M", "CO₂ index in Board bonus")]),
+ ("Toyota", [("W", "“Multi-pathway” contested"), ("M", "10-year hybrid battery warranty"), ("M", "Battery 3R, Challenge 2050"), ("W", "Worst on climate lobbying")]),
+ ("Mercedes-Benz", [("-", ""), ("S", "Traffic Safety + Digital Trust"), ("M", "Low-CO₂ steel, aluminium"), ("S", "Yearly transition plan")]),
+ ("BMW", [("M", "Debrecen training centre"), ("-", ""), ("S", "Neue Klasse: 0.1 t CO₂/car"), ("M", "Fleet CO₂ in long-term pay")]),
+ ("Volvo Cars", [("-", ""), ("S", "Seatbelt patent, E.V.A."), ("M", "EX90 battery passport"), ("M", "2024 reset explained")]),
+ ("Renault", [("S", "Twingo, social leasing, Flins"), ("S", "Firefighter patent, free"), ("S", "The Future Is NEUTRAL"), ("W", "Ratings table only")]),
+ ("Miele", [("-", ""), ("S", "5,000-cycle durability test"), ("-", ""), ("-", "")]),
+ ("Patagonia", [("-", ""), ("S", "Ironclad Guarantee, repairs"), ("S", "Footprint Chronicles map"), ("S", "“Work in Progress” report")]),
+ ("Schneider Electric", [("S", "Access to Energy, 1m trained"), ("-", ""), ("S", "−56% CO₂ at top suppliers"), ("S", "Quarterly impact score")]),
+ ("Stellantis (today)", [("M", "ë-C3 €94/month"), ("W", "US recalls, privacy"), ("M", "SUSTAINera, Reuse +51%"), ("W", "No reset story")]),
+]
+x0, y0 = 0.67, 1.62
+wp, wt, ws = 1.85, 2.38, 0.6
+rh = 0.43
+# header
+for j, t in enumerate(TERR):
+    label_box(sM, x0 + wp + j * wt + 0.03, y0, wt - 0.06, 0.5, t, fill=NAVY, size=10.5, bold=True, name=f"Head {t}")
+label_box(sM, x0 + wp + 4 * wt + 0.03, y0, ws, 0.5, "# Strong", fill=NAVY, size=9.5, bold=True, name="Head strong")
+counts = [0, 0, 0, 0]
+for i, (name, cells) in enumerate(MAP):
+    y = y0 + 0.58 + i * rh
+    stl = name.startswith("Stellantis")
+    if stl:
+        y += 0.42
+        box(sM, x0, y - 0.03, wp + 4 * wt + ws + 0.03, rh, fill=PEACH, line=None, shape=MSO_SHAPE.RECTANGLE, name="Stellantis band")
+    elif i % 2 == 1:
+        box(sM, x0, y - 0.03, wp + 4 * wt + ws + 0.03, rh, fill=RGBColor(0xF6, 0xF7, 0xFB), line=None, shape=MSO_SHAPE.RECTANGLE, name=f"Band {i}")
+    text(sM, x0 + 0.08, y, wp - 0.1, rh - 0.06, [(name, 11, ORANGE if stl else NAVY, True, False)], anchor=MSO_ANCHOR.MIDDLE, name=f"Player {name}")
+    strong = 0
+    for j, (lv, act) in enumerate(cells):
+        cx = x0 + wp + j * wt + 0.12
+        cy = y + (rh - 0.06) / 2 - 0.13
+        if lv == "S":
+            dot = box(sM, cx, cy, 0.26, 0.26, fill=NAVY, line=None, shape=MSO_SHAPE.OVAL, name=f"Dot {name} {j}")
+            strong += 1
+            if not stl:
+                counts[j] += 1
+        elif lv == "M":
+            dot = box(sM, cx, cy, 0.26, 0.26, fill=RGBColor(0x9F, 0xAE, 0xE0), line=None, shape=MSO_SHAPE.OVAL, name=f"Dot {name} {j}")
+        elif lv == "W":
+            dot = box(sM, cx, cy, 0.26, 0.26, fill=WHITE, line=ORANGE, shape=MSO_SHAPE.OVAL, name=f"Dot {name} {j}")
+            dot.line.width = Pt(1.5)
+        else:
+            box(sM, cx + 0.06, cy + 0.12, 0.14, 0.025, fill=RGBColor(0xB8, 0xBD, 0xC8), line=None, shape=MSO_SHAPE.RECTANGLE, name=f"Dash {name} {j}")
+        if act:
+            text(sM, cx + 0.36, y, wt - 0.55, rh - 0.06, [(act, 9, TEXT, False, False)], anchor=MSO_ANCHOR.MIDDLE, name=f"Act {name} {j}")
+    text(sM, x0 + wp + 4 * wt, y, ws, rh - 0.06, [(str(strong), 13, ORANGE if stl else NAVY, True, False)],
+         anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER, name=f"Count {name}")
+# column totals (benchmark players only)
+yT = y0 + 0.58 + (len(MAP) - 1) * rh + 0.04
+text(sM, x0 + 0.08, yT, wp, 0.3, [("Strong players", 10, GREY, True, False)], anchor=MSO_ANCHOR.MIDDLE, name="Totals label")
+for j, c in enumerate(counts):
+    text(sM, x0 + wp + j * wt + 0.12, yT, wt - 0.2, 0.3, [(f"{c} of 9", 10, NAVY, True, False)], anchor=MSO_ANCHOR.MIDDLE, name=f"Total {j}")
+# legend
+ly = 6.98
+lx = 0.67
+for lv, lab in [("S", "Strong: quantified proof, clear format"), ("M", "Medium: partial or contradicted"), ("W", "Weak: value claims or contested"), ("-", "Not found in our sources")]:
+    if lv == "S":
+        box(sM, lx, ly + 0.04, 0.18, 0.18, fill=NAVY, line=None, shape=MSO_SHAPE.OVAL, name=f"Legend {lv}")
+    elif lv == "M":
+        box(sM, lx, ly + 0.04, 0.18, 0.18, fill=RGBColor(0x9F, 0xAE, 0xE0), line=None, shape=MSO_SHAPE.OVAL, name=f"Legend {lv}")
+    elif lv == "W":
+        d = box(sM, lx, ly + 0.04, 0.18, 0.18, fill=WHITE, line=ORANGE, shape=MSO_SHAPE.OVAL, name=f"Legend {lv}")
+        d.line.width = Pt(1.5)
+    else:
+        box(sM, lx + 0.03, ly + 0.12, 0.12, 0.025, fill=RGBColor(0xB8, 0xBD, 0xC8), line=None, shape=MSO_SHAPE.RECTANGLE, name="Legend dash")
+    text(sM, lx + 0.26, ly, 2.45, 0.26, [(lab, 9, GREY, False, False)], anchor=MSO_ANCHOR.MIDDLE, name=f"Legend text {lv}")
+    lx += 2.75
+notes(sM, "Qualitative reading by the research team, not a rating; based on the sources collected (mostly company-reported). Intermediate levels in the report (medium-strong) are shown as Medium: Mercedes Environmental, BMW Transparency, Volvo Environmental and Transparency. Renault Transparency set to Weak on a single signal (external ratings table). Miele was researched only for Customer Trust, so its other cells mean not analysed. Stellantis row shown for reference and not counted in the totals. Readings: Renault is the most complete carmaker (3 strong); Schneider and Patagonia are the most complete overall; Customer Trust and Environmental Transformation are the most contested territories; Fair Transition and Transparency have the fewest strong players, which is where Stellantis has room.")
+
 # ---------------------------------------------------------------- 11 Stellantis today
 s11 = new_slide(LAYOUT_BAR, "Stellantis today")
 title(s11, "More proof points than story, scattered across brands and countries")
@@ -384,7 +459,7 @@ for sh in takeout.shapes:
 notes(takeout, "Before client use, verify: US recall and J.D. Power figures, status of the Texas case, AGCM commitments, Indonesian nickel position, live 2038 pages, SUSTAINera 2025 revenues, reskilling and Shares to Win KPIs, ESG pay metrics, ESG content of the FaSTLAne Investor Day deck, and capture the visuals by hand.")
 
 # ---------------------------------------------------------------- order & cleanup
-order = [cover, agenda, divider, sK, s4, sA, sB, sC, sD, sE, s5, s6, s11, s12, takeout]
+order = [cover, agenda, divider, sK, s4, sA, sB, sC, sD, sE, sM, s5, s6, s11, s12, takeout]
 sldIdLst = prs.slides._sldIdLst
 id_by_part = {prs.part.related_part(s.rId): s for s in list(sldIdLst)}
 for drop in (blank, cards_tpl):
