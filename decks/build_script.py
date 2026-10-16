@@ -54,10 +54,58 @@ for i, (n, h, tag, paras) in enumerate(cols):
              anchor=MSO_ANCHOR.MIDDLE, align=PP_ALIGN.CENTER, name="End card text")
 notes(s, "Script for the International Volunteering Day (5 December) video on Motor Citizens, Stellantis' global employee volunteering program. Structure: opening, core message, optional employee cuts, ending with the Stellantis Motor Citizens end card.")
 
-keep = s
+
+# ---------------------------------------------------------------- slide 2: requested material
+r = new_slide(LAYOUT_BAR, "Stellantis Motor Citizens · Requested material")
+text(r, 0.67, 1.05, 12.0, 0.5, [{"runs": [("What we need from Stellantis to produce the video", 22, NAVY, True, False)]}], name="Title")
+# left card: program material
+xL, wL, yT, hT = 0.67, 4.95, 1.8, 4.95
+box(r, xL, yT, wL, hT, fill=WHITE, line=BORDER, name="Material card")
+label_box(r, xL, yT, wL, 0.55, "", fill=NAVY, shape=MSO_SHAPE.RECTANGLE, name="Material head")
+text(r, xL + 0.2, yT + 0.05, wL - 0.4, 0.45, [{"runs": [("01  ", 14, ORANGE, True, False), ("Motor Citizens program material", 14, WHITE, True, False)]}],
+     anchor=MSO_ANCHOR.MIDDLE, name="Material title")
+mat = [("Program overview", "purpose, how it works, countries involved"),
+       ("Key facts and figures", "volunteers, hours, projects, latest year available"),
+       ("Projects and partners", "examples by area: young people, environment, sharing skills"),
+       ("Photo and video footage", "past activities, with usage rights"),
+       ("Brand assets", "Motor Citizens logo, visual guidelines, approved wording"),
+       ("Existing communication", "intranet articles, social posts, internal videos"),
+       ("Contacts", "program owner and local coordinators for filming")]
+paras = []
+for h, b in mat:
+    paras.append({"runs": [(h, 12, NAVY, True, False), (": " + b, 11.5, TEXT, False, False)], "after": 8, "bullet": True})
+text(r, xL + 0.25, yT + 0.8, wL - 0.5, hT - 1.0, paras, name="Material list")
+# right card: employee interviews
+xR, wR = xL + wL + 0.15, 12.0 - wL - 0.15 + 0.01
+box(r, xR, yT, wR, hT, fill=WHITE, line=BORDER, name="Interview card")
+label_box(r, xR, yT, wR, 0.55, "", fill=NAVY, shape=MSO_SHAPE.RECTANGLE, name="Interview head")
+text(r, xR + 0.2, yT + 0.05, wR - 0.4, 0.45, [{"runs": [("02  ", 14, ORANGE, True, False), ("Employee interviews", 14, WHITE, True, False)]}],
+     anchor=MSO_ANCHOR.MIDDLE, name="Interview title")
+label_box(r, xR + wR - 2.35, yT + 0.65, 2.2, 0.28, "Draft: questions to co-write", fill=PEACH, color=ORANGE, size=9, bold=True,
+          shape=MSO_SHAPE.ROUNDED_RECTANGLE, name="Draft tag")
+text(r, xR + 0.25, yT + 0.68, wR - 2.8, 0.6, [{"runs": [("Who and how: ", 11, NAVY, True, False),
+     ("3 volunteers, different countries, roles and project types; about 20 min each; signed release forms.", 11, TEXT, False, False)]}], name="Interview setup")
+qs = [("Can you introduce yourself: your name, your role and where you work?", ""),
+      ("Which Motor Citizens project did you join, and what did you do?", ""),
+      ("Why did you decide to volunteer?", "cut 1"),
+      ("Which of your skills did you bring, and what did you learn?", "cut 2"),
+      ("What difference did you see for the people or the community you helped?", "cut 3"),
+      ("What was the moment that stayed with you the most?", ""),
+      ("What would you say to a colleague thinking about volunteering?", ""),
+      ("Motor Citizens in one word?", "")]
+qp = []
+for i, (q, cut) in enumerate(qs, 1):
+    runs = [(f"{i}.  ", 13, ORANGE, True, False), (q, 13, TEXT, False, False)]
+    if cut:
+        runs.append(("   → " + cut, 10, ORANGE, True, True))
+    qp.append({"runs": runs, "after": 10})
+text(r, xR + 0.25, yT + 1.45, wR - 0.5, hT - 1.6, qp, name="Interview questions")
+notes(r, "Requested material for the International Volunteering Day video. The arrows map interview questions to the three employee cuts in the script (cut 1: give something back; cut 2: share what I know and learn; cut 3: the difference we can make, together). Questions are a draft to be finalised together; deadlines and named contacts to be agreed with the Stellantis team.")
+
+keep = (s, r)
 sldIdLst = prs.slides._sldIdLst
 for sid in list(sldIdLst):
-    if prs.part.related_part(sid.rId) is not keep.part:
+    if prs.part.related_part(sid.rId) not in (keep[0].part, keep[1].part):
         prs.part.drop_rel(sid.rId)
         sldIdLst.remove(sid)
 prs.save(OUT)
